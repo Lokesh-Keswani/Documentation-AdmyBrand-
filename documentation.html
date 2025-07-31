@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADmyBRAND Dash Nova - Technical Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #2d2d2d;
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 2rem 0 1rem 0;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #404040;
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+        }
+        
+        a {
+            color: #3b82f6;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            border-bottom-color: #3b82f6;
+            color: #1d4ed8;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        code {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        blockquote {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .toc h2 {
+            border: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc li {
+            margin: 0.5rem 0;
+        }
+        
+        .toc a {
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc a:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        strong {
+            font-weight: 600;
+        }
+        
+        em {
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="admybrand-dash-nova-technical-documentation">ADmyBRAND Dash Nova - Technical Documentation</h1>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#project-overview">Project Overview</a></li>
+                <li><a href="#repository-structure">Repository Structure</a></li>
+                <li><a href="#frontend-architecture">Frontend Architecture</a></li>
+                <li><a href="#backend-architecture">Backend Architecture</a></li>
+                <li><a href="#configuration-files">Configuration Files</a></li>
+                <li><a href="#development-setup">Development Setup</a></li>
+                <li><a href="#deployment-configuration">Deployment Configuration</a></li>
+                <li><a href="#database-integration">Database Integration</a></li>
+                <li><a href="#api-endpoints">API Endpoints</a></li>
+                <li><a href="#websocket-events">WebSocket Events</a></li>
+                <li><a href="#testing">Testing</a></li>
+            </ul>
+        </div>
+
+        <h2 id="project-overview">Project Overview</h2>
+        <p>ADmyBRAND Dash Nova is a modern, full-stack analytics dashboard for digital marketing agencies built with React, TypeScript, Node.js, and real-time WebSocket updates. The project follows a monorepo structure with separate frontend and backend applications.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Real-time Metrics</strong>: Live updates every 5 seconds via WebSocket</li>
+            <li><strong>Interactive Charts</strong>: Revenue trends, user growth, conversion analytics</li>
+            <li><strong>Campaign Management</strong>: Complete CRUD operations with filtering</li>
+            <li><strong>Export Capabilities</strong>: CSV and PDF report generation</li>
+            <li><strong>Modern UI</strong>: Glassmorphism design with dark/light theme support</li>
+            <li><strong>Responsive Design</strong>: Optimized for all device sizes</li>
+        </ul>
+
+        <h2 id="repository-structure">Repository Structure</h2>
+        <p>Based on the actual repository structure:</p>
+        <pre><code>admybrand-dash-nova/
+├── Configuration Files
+│   ├── .env                     # Environment variables
+│   ├── .env.local              # Local environment overrides
+│   ├── .env.production         # Production environment
+│   ├── .gitignore              # Git ignore patterns
+│   ├── bun.lockb               # Bun package lock file
+│   ├── components.json         # shadcn/ui configuration
+│   ├── eslint.config.js        # ESLint configuration
+│   ├── package-lock.json       # NPM lock file
+│   ├── package.json            # Frontend dependencies
+│   ├── postcss.config.js       # PostCSS configuration
+│   ├── tailwind.config.ts      # Tailwind CSS configuration
+│   ├── tsconfig.app.json       # TypeScript app config
+│   ├── tsconfig.json           # Main TypeScript config
+│   ├── tsconfig.node.json      # Node TypeScript config
+│   └── vite.config.ts          # Vite configuration
+│
+├── Build & Deployment
+│   ├── index.html              # Main HTML template
+│   ├── netlify.toml            # Netlify deployment config
+│   └── vercel.json             # Vercel deployment config
+│
+├── Development Scripts
+│   ├── start-servers-debug.bat     # Debug mode startup
+│   ├── start-servers-with-mongo.bat # MongoDB startup
+│   └── start-servers.bat          # Standard startup
+│
+├── Testing & Utils
+│   ├── test-account-reactivation.js # Account testing
+│   └── test-connection.html        # Connection testing
+│
+├── Frontend Source (src/)
+│   ├── App.tsx                 # Main application component
+│   ├── index.css              # Global styles
+│   ├── main.tsx               # Application entry point
+│   ├── vite-env.d.ts          # Vite type definitions
+│   │
+│   ├── components/            # Reusable UI components
+│   │   ├── AppSidebar.tsx     # Application sidebar
+│   │   ├── Dashboard.tsx      # Main dashboard
+│   │   ├── MetricCard.tsx     # Metric display cards
+│   │   ├── Navbar.tsx         # Navigation bar
+│   │   ├── ThemeProvider.tsx  # Theme context provider
+│   │   ├── ThemeToggle.tsx    # Theme switcher
+│   │   │
+│   │   ├── auth/              # Authentication components
+│   │   │   ├── LoginForm.tsx   # Login form
+│   │   │   ├── ProtectedRoute.tsx # Route protection
+│   │   │   └── SignupForm.tsx  # Registration form
+│   │   │
+│   │   ├── charts/            # Chart components
+│   │   │   ├── AnalyticsCharts.tsx    # Main analytics charts
+│   │   │   ├── ConversionsChart.tsx   # Conversion tracking
+│   │   │   ├── RevenueChart.tsx       # Revenue visualization
+│   │   │   └── TrafficSourcesChart.tsx # Traffic analysis
+│   │   │
+│   │   └── ui/                # shadcn/ui components
+│   │       ├── accordion.tsx   # Collapsible content
+│   │       ├── alert.tsx       # Alert notifications
+│   │       ├── alert-dialog.tsx # Modal alerts
+│   │       ├── button.tsx      # Button component
+│   │       ├── card.tsx        # Card containers
+│   │       ├── chart.tsx       # Chart wrapper
+│   │       ├── dialog.tsx      # Modal dialogs
+│   │       ├── input.tsx       # Form inputs
+│   │       ├── table.tsx       # Data tables
+│   │       └── [35+ other UI components]
+│   │
+│   ├── contexts/              # React contexts
+│   │   └── AuthContext.tsx    # Authentication state
+│   │
+│   ├── hooks/                 # Custom React hooks
+│   │   ├── use-mobile.tsx     # Mobile detection
+│   │   └── use-toast.ts       # Toast notifications
+│   │
+│   ├── lib/                   # Utility functions
+│   │   └── utils.ts           # Helper utilities
+│   │
+│   ├── pages/                 # Route components
+│   │   ├── Analytics.tsx      # Analytics dashboard
+│   │   ├── AuthPage.tsx       # Authentication page
+│   │   ├── Campaigns.tsx      # Campaign management
+│   │   ├── Index.tsx          # Home page
+│   │   ├── NotFound.tsx       # 404 error page
+│   │   ├── Reports.tsx        # Reports generation
+│   │   └── Settings.tsx       # User settings
+│   │
+│   └── services/              # External services
+│       ├── api.ts             # API client
+│       └── websocket.ts       # WebSocket client
+│
+├── Public Assets (public/)
+│   ├── favicon.ico            # Site favicon
+│   ├── placeholder.svg        # Placeholder image
+│   └── robots.txt             # SEO robots file
+│
+└── Backend (backend/)
+    ├── Configuration
+    │   ├── .env               # Backend environment
+    │   ├── .env.local         # Local overrides
+    │   ├── .gitignore         # Backend git ignore
+    │   ├── package-lock.json  # Backend lock file
+    │   ├── package.json       # Backend dependencies
+    │   └── render.yaml        # Render deployment
+    │
+    ├── Main Server
+    │   └── server.js          # Express server entry
+    │
+    ├── Testing
+    │   └── test-mongo.js      # MongoDB connection test
+    │
+    ├── config/                # Configuration modules
+    │   └── database.js        # Database configuration
+    │
+    ├── data/                  # Data layer
+    │   └── mockDatabase.js    # Mock data generator
+    │
+    ├── models/                # Database models
+    │   └── User.js            # User model schema
+    │
+    ├── routes/                # API route handlers
+    │   ├── analytics.js       # Analytics endpoints
+    │   ├── auth.js            # Authentication routes
+    │   ├── campaigns.js       # Campaign management
+    │   ├── export.js          # Data export routes
+    │   └── reports.js         # Report generation
+    │
+    └── services/              # Business logic
+        └── realTimeService.js # WebSocket service</code></pre>
+
+        <h2 id="frontend-architecture">Frontend Architecture</h2>
+        <h3>Core Application Structure</h3>
+        <h4>App.tsx</h4>
+        <p>Main application component that handles routing and global state:</p>
+        <pre><code>// Main app structure with routing and providers
+function App() {
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;AuthProvider&gt;
+        &lt;Router&gt;
+          &lt;Routes&gt;
+            &lt;Route path="/" element={&lt;Index /&gt;} /&gt;
+            &lt;Route path="/analytics" element={
+              &lt;ProtectedRoute&gt;&lt;Analytics /&gt;&lt;/ProtectedRoute&gt;
+            } /&gt;
+            &lt;Route path="/campaigns" element={
+              &lt;ProtectedRoute&gt;&lt;Campaigns /&gt;&lt;/ProtectedRoute&gt;
+            } /&gt;
+          &lt;/Routes&gt;
+        &lt;/Router&gt;
+      &lt;/AuthProvider&gt;
+    &lt;/ThemeProvider&gt;
+  );
+}</code></pre>
+
+        <h4>main.tsx</h4>
+        <p>Application entry point with React 18 setup:</p>
+        <pre><code>import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  &lt;React.StrictMode&gt;
+    &lt;App/&gt;
+  &lt;/React.StrictMode&gt;,
+)</code></pre>
+
+        <h3>Component Organization</h3>
+        <h4>Primary Components (/components)</h4>
+        <p><strong>AppSidebar.tsx</strong> - Navigation sidebar with menu items</p>
+        <ul>
+            <li>Handles navigation state</li>
+            <li>Integrates with routing</li>
+            <li>Responsive collapse behavior</li>
+        </ul>
+
+        <p><strong>Dashboard.tsx</strong> - Main dashboard container</p>
+        <ul>
+            <li>Orchestrates metric cards and charts</li>
+            <li>Manages real-time data updates</li>
+            <li>Handles WebSocket connections</li>
+        </ul>
+
+        <p><strong>MetricCard.tsx</strong> - Reusable metric display</p>
+        <ul>
+            <li>Supports various data formats (currency, percentage, number)</li>
+            <li>Animated value changes</li>
+            <li>Loading and error states</li>
+        </ul>
+
+        <p><strong>Navbar.tsx</strong> - Top navigation bar</p>
+        <ul>
+            <li>User profile dropdown</li>
+            <li>Theme toggle integration</li>
+            <li>Breadcrumb navigation</li>
+        </ul>
+
+        <h4>Authentication Components (/components/auth)</h4>
+        <p><strong>LoginForm.tsx</strong> - User login interface</p>
+        <pre><code>interface LoginFormProps {
+  onSubmit: (credentials: LoginCredentials) =&gt; Promise&lt;void&gt;;
+  loading?: boolean;
+  error?: string;
+}</code></pre>
+
+        <p><strong>SignupForm.tsx</strong> - User registration interface</p>
+        <pre><code>interface SignupFormProps {
+  onSubmit: (userData: SignupData) =&gt; Promise&lt;void&gt;;
+  loading?: boolean;
+  error?: string;
+}</code></pre>
+
+        <p><strong>ProtectedRoute.tsx</strong> - Route protection wrapper</p>
+        <pre><code>interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requiredRole?: string;
+}</code></pre>
+
+        <h4>Chart Components (/components/charts)</h4>
+        <p><strong>AnalyticsCharts.tsx</strong> - Main chart container</p>
+        <ul>
+            <li>Multiple chart type support</li>
+            <li>Period selection controls</li>
+            <li>Data filtering capabilities</li>
+        </ul>
+
+        <p><strong>RevenueChart.tsx</strong> - Revenue trend visualization</p>
+        <ul>
+            <li>Line chart with target indicators</li>
+            <li>Period comparisons</li>
+            <li>Interactive tooltips</li>
+        </ul>
+
+        <p><strong>ConversionsChart.tsx</strong> - Conversion funnel tracking</p>
+        <ul>
+            <li>Funnel visualization</li>
+            <li>Step-by-step analysis</li>
+            <li>Conversion rate calculations</li>
+        </ul>
+
+        <p><strong>TrafficSourcesChart.tsx</strong> - Traffic source breakdown</p>
+        <ul>
+            <li>Pie/donut chart visualization</li>
+            <li>Source comparison</li>
+            <li>Growth indicators</li>
+        </ul>
+
+        <h3>Page Components (/pages)</h3>
+        <h4>Analytics.tsx</h4>
+        <p>Complete analytics dashboard page:</p>
+        <ul>
+            <li>KPI metrics overview</li>
+            <li>Revenue and user growth charts</li>
+            <li>Traffic source analysis</li>
+            <li>Real-time data updates</li>
+        </ul>
+
+        <h4>Campaigns.tsx</h4>
+        <p>Campaign management interface:</p>
+        <ul>
+            <li>Campaign listing with pagination</li>
+            <li>Advanced filtering and search</li>
+            <li>Campaign performance metrics</li>
+            <li>CRUD operations</li>
+        </ul>
+
+        <h4>Reports.tsx</h4>
+        <p>Report generation and export:</p>
+        <ul>
+            <li>Report builder interface</li>
+            <li>PDF and CSV export options</li>
+            <li>Scheduled report management</li>
+            <li>Custom date range selection</li>
+        </ul>
+
+        <h3>Utility Systems</h3>
+        <h4>Contexts (/contexts)</h4>
+        <p><strong>AuthContext.tsx</strong> - Authentication state management</p>
+        <pre><code>interface AuthContextType {
+  user: User | null;
+  login: (credentials: LoginCredentials) =&gt; Promise&lt;void&gt;;
+  logout: () =&gt; void;
+  loading: boolean;
+  error: string | null;
+}</code></pre>
+
+        <h4>Hooks (/hooks)</h4>
+        <p><strong>use-mobile.tsx</strong> - Mobile device detection</p>
+        <p><strong>use-toast.ts</strong> - Toast notification management</p>
+
+        <h4>Services (/services)</h4>
+        <p><strong>api.ts</strong> - HTTP client with interceptors</p>
+        <p><strong>websocket.ts</strong> - WebSocket connection management</p>
+
+        <h2 id="backend-architecture">Backend Architecture</h2>
+        <h3>Server Configuration (server.js)</h3>
+        <p>Main Express server setup with middleware:</p>
+        <pre><code>const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { Server } = require('socket.io');
+
+const app = express();
+
+// Security middleware
+app.use(helmet());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000 // limit each IP to 1000 requests per windowMs
+});
+app.use(limiter);
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/analytics', require('./routes/analytics'));
+app.use('/api/campaigns', require('./routes/campaigns'));
+app.use('/api/reports', require('./routes/reports'));
+app.use('/api/export', require('./routes/export'));</code></pre>
+
+        <h3>Route Organization (/routes)</h3>
+        <h4>analytics.js</h4>
+        <p>Analytics data endpoints:</p>
+        <pre><code>// GET /api/analytics/metrics - Current metrics
+router.get('/metrics', authenticateToken, async (req, res) => {
+  try {
+    const metrics = await getAnalyticsMetrics(req.query);
+    res.json({ success: true, data: metrics });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /api/analytics/charts/revenue - Revenue chart data
+router.get('/charts/revenue', authenticateToken, getRevenueChartData);
+
+// GET /api/analytics/charts/users - User growth data  
+router.get('/charts/users', authenticateToken, getUserGrowthData);</code></pre>
+
+        <h4>campaigns.js</h4>
+        <p>Campaign management endpoints:</p>
+        <pre><code>// GET /api/campaigns - List campaigns with filtering
+router.get('/', authenticateToken, async (req, res) => {
+  const { page = 1, limit = 10, search, status, sortBy } = req.query;
+  const campaigns = await getCampaigns({
+    page: parseInt(page),
+    limit: parseInt(limit),
+    search,
+    status,
+    sortBy
+  });
+  res.json({ success: true, data: campaigns });
+});
+
+// GET /api/campaigns/:id - Single campaign details
+router.get('/:id', authenticateToken, getCampaignById);
+
+// POST /api/campaigns - Create new campaign
+router.post('/', authenticateToken, createCampaign);</code></pre>
+
+        <h4>auth.js</h4>
+        <p>Authentication endpoints:</p>
+        <pre><code>// POST /api/auth/register - User registration
+router.post('/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const user = await createUser({ name, email, password });
+    const token = generateToken(user);
+    res.status(201).json({ 
+      success: true, 
+      data: { user: sanitizeUser(user), token } 
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/auth/login - User authentication
+router.post('/login', authenticateUser);</code></pre>
+
+        <h3>Data Layer</h3>
+        <h4>models/User.js</h4>
+        <p>User model with Mongoose:</p>
+        <pre><code>const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['admin', 'user'], default: 'user' },
+  isActive: { type: Boolean, default: true },
+  lastLogin: Date
+}, { timestamps: true });
+
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});</code></pre>
+
+        <h4>data/mockDatabase.js</h4>
+        <p>Mock data generation for development:</p>
+        <pre><code>const generateMockAnalytics = () => {
+  return {
+    totalRevenue: Math.round(Math.random() * 100000),
+    activeUsers: Math.round(Math.random() * 10000),
+    conversionRate: Math.round(Math.random() * 10 * 100) / 100,
+    growthRate: Math.round((Math.random() - 0.5) * 20 * 100) / 100
+  };
+};
+
+const generateCampaignData = () => {
+  // Mock campaign generation logic
+};</code></pre>
+
+        <h4>config/database.js</h4>
+        <p>Database connection configuration:</p>
+        <pre><code>const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error('Database connection error:', error);
+    process.exit(1);
+  }
+};</code></pre>
+
+        <h3>Real-time Services</h3>
+        <h4>services/realTimeService.js</h4>
+        <p>WebSocket event management:</p>
+        <pre><code>const setupRealTimeService = (io) => {
+  io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
+    
+    // Metrics subscription
+    socket.on('subscribe-metrics', () => {
+      socket.join('metrics-room');
+    });
+    
+    // Campaign updates subscription
+    socket.on('subscribe-campaigns', () => {
+      socket.join('campaigns-room');
+    });
+    
+    socket.on('disconnect', () => {
+      console.log('Client disconnected:', socket.id);
+    });
+  });
+  
+  // Broadcast updates every 5 seconds
+  setInterval(() => {
+    const metrics = generateMockAnalytics();
+    io.to('metrics-room').emit('real-time-update', {
+      type: 'metrics',
+      data: metrics,
+      timestamp: new Date().toISOString()
+    });
+  }, 5000);
+};</code></pre>
+
+        <h2 id="configuration-files">Configuration Files</h2>
+        <h3>Frontend Configuration</h3>
+        <h4>vite.config.ts</h4>
+        <p>Vite build configuration:</p>
+        <pre><code>import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  server: {
+    port: 5174,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
+      }
+    }
+  }
+})</code></pre>
+
+        <h4>tailwind.config.ts</h4>
+        <p>Tailwind CSS configuration:</p>
+        <pre><code>import type { Config } from "tailwindcss"
+
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#3b82f6',
+          foreground: '#ffffff',
+        },
+        secondary: {
+          DEFAULT: '#8b5cf6',
+          foreground: '#ffffff',
+        }
+      }
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+}</code></pre>
+
+        <h4>components.json</h4>
+        <p>shadcn/ui configuration:</p>
+        <pre><code>{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}</code></pre>
+
+        <h3>TypeScript Configuration</h3>
+        <h4>tsconfig.json</h4>
+        <p>Main TypeScript configuration:</p>
+        <pre><code>{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}</code></pre>
+
+        <h2 id="development-setup">Development Setup</h2>
+        <h3>Prerequisites</h3>
+        <ul>
+            <li>Node.js 18+</li>
+            <li>npm or yarn or bun</li>
+            <li>MongoDB Atlas account (or local MongoDB)</li>
+            <li>Modern web browser</li>
+        </ul>
+
+        <h3>Installation Steps</h3>
+        <ol>
+            <li><strong>Clone Repository</strong>
+                <pre><code>git clone <repository-url>
+cd admybrand-dash-nova</code></pre>
+            </li>
+            <li><strong>Install Frontend Dependencies</strong>
+                <pre><code>npm install
+# or
+yarn install
+# or
+bun install</code></pre>
+            </li>
+            <li><strong>Install Backend Dependencies</strong>
+                <pre><code>cd backend
+npm install</code></pre>
+            </li>
+            <li><strong>Environment Configuration</strong>
+                <p>Frontend (.env):</p>
+                <pre><code>VITE_API_URL=http://localhost:3001
+VITE_WS_URL=ws://localhost:3001</code></pre>
+                <p>Backend (.env):</p>
+                <pre><code>PORT=3001
+NODE_ENV=development
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/admybrand
+JWT_SECRET=your-secret-key
+JWT_EXPIRE=7d
+FRONTEND_URL=http://localhost:5174</code></pre>
+            </li>
+            <li><strong>Start Development Servers</strong>
+                <p>Using batch scripts:</p>
+                <pre><code># Windows
+start-servers.bat          # Standard startup
+start-servers-debug.bat    # Debug mode
+start-servers-with-mongo.bat # With MongoDB
+
+# Manual startup
+# Terminal 1 - Backend
+cd backend && npm run dev
+
+# Terminal 2 - Frontend  
+npm run dev</code></pre>
+            </li>
+        </ol>
+
+        <h3>Development Commands</h3>
+        <h4>Frontend</h4>
+        <pre><code>npm run dev          # Start development server (port 5174)
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint</code></pre>
+
+        <h4>Backend</h4>
+        <pre><code>npm run dev          # Start with nodemon
+npm start            # Production start</code></pre>
+
+        <h2 id="deployment-configuration">Deployment Configuration</h2>
+        <h3>Netlify (netlify.toml)</h3>
+        <pre><code>[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"</code></pre>
+
+        <h3>Vercel (vercel.json)</h3>
+        <pre><code>{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
+}</code></pre>
+
+        <h3>Render (render.yaml)</h3>
+        <p>Backend deployment configuration:</p>
+        <pre><code>services:
+  - type: web
+    name: admybrand-api
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: admybrand-db
+          property: connectionString</code></pre>
+
+        <h2 id="database-integration">Database Integration</h2>
+        <h3>MongoDB Connection</h3>
+        <p>The application uses MongoDB Atlas with the connection string configured in environment variables. The database structure includes:</p>
+        <ul>
+            <li><strong>Users Collection</strong>: User authentication and profile data</li>
+            <li><strong>Campaigns Collection</strong>: Campaign data and performance metrics</li>
+            <li><strong>Analytics Collection</strong>: Time-series analytics data</li>
+            <li><strong>Reports Collection</strong>: Generated report metadata</li>
+        </ul>
+
+        <h3>Connection Management</h3>
+        <pre><code>// config/database.js
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB Connected Successfully');
+  } catch (error) {
+    console.error('Database Connection Error:', error);
+    process.exit(1);
+  }
+};</code></pre>
+
+        <h3>Testing Files</h3>
+        <h4>test-mongo.js</h4>
+        <p>Database connection testing:</p>
+        <pre><code>const mongoose = require('mongoose');
+require('dotenv').config();
+
+const testConnection = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB connection successful');
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error);
+    process.exit(1);
+  }
+};
+
+testConnection();</code></pre>
+
+        <h4>test-connection.html</h4>
+        <p>Frontend WebSocket connection testing interface for debugging real-time features.</p>
+
+        <h2 id="api-endpoints">API Endpoints</h2>
+        <h3>Authentication Routes (/api/auth)</h3>
+        <h4>POST /api/auth/register</h4>
+        <p>User registration</p>
+        <pre><code>// Request body
+{
+  "name": "John Doe",
+  "email": "john@example.com", 
+  "password": "securepassword"
+}
+
+// Response
+{
+  "success": true,
+  "data": {
+    "user": { "id": "...", "name": "John Doe", "email": "john@example.com" },
+    "token": "jwt-token-here"
+  }
+}</code></pre>
+
+        <h4>POST /api/auth/login</h4>
+        <p>User authentication</p>
+        <pre><code>// Request body
+{
+  "email": "john@example.com",
+  "password": "securepassword"
+}</code></pre>
+
+        <h3>Analytics Routes (/api/analytics)</h3>
+        <h4>GET /api/analytics/metrics</h4>
+        <p>Current key metrics</p>
+        <ul>
+            <li>Query params: <code>period</code> (7d, 30d, 90d), <code>timezone</code></li>
+            <li>Returns: totalRevenue, activeUsers, conversionRate, growthRate</li>
+        </ul>
+
+        <h4>GET /api/analytics/charts/revenue</h4>
+        <p>Revenue chart data</p>
+        <ul>
+            <li>Query params: <code>period</code>, <code>granularity</code> (hourly, daily, weekly)</li>
+            <li>Returns: Array of {date, revenue, target}</li>
+        </ul>
+
+        <h4>GET /api/analytics/charts/users</h4>
+        <p>User growth data</p>
+        <ul>
+            <li>Returns: Array of {date, newUsers, returningUsers, totalUsers}</li>
+        </ul>
+
+        <h4>GET /api/analytics/traffic-sources</h4>
+        <p>Traffic breakdown</p>
+        <ul>
+            <li>Returns: Array of {source, visitors, percentage, change}</li>
+        </ul>
+
+        <h3>Campaign Routes (/api/campaigns)</h3>
+        <h4>GET /api/campaigns</h4>
+        <p>List campaigns with filtering</p>
+        <ul>
+            <li>Query params: <code>page</code>, <code>limit</code>, <code>search</code>, <code>status</code>, <code>sortBy</code>, <code>sortOrder</code></li>
+            <li>Returns: Paginated campaign list with metadata</li>
+        </ul>
+
+        <h4>GET /api/campaigns/:id</h4>
+        <p>Single campaign details</p>
+        <ul>
+            <li>Returns: Complete campaign data with performance metrics</li>
+        </ul>
+
+        <h4>POST /api/campaigns</h4>
+        <p>Create new campaign</p>
+
+        <h4>PUT /api/campaigns/:id</h4>
+        <p>Update campaign</p>
+
+        <h4>DELETE /api/campaigns/:id</h4>
+        <p>Delete campaign</p>
+
+        <h3>Export Routes (/api/export)</h3>
+        <h4>GET /api/export/campaigns/csv</h4>
+        <p>Export campaigns to CSV</p>
+
+        <h4>GET /api/export/analytics/csv</h4>
+        <p>Export analytics to CSV</p>
+
+        <h4>POST /api/export/report/pdf</h4>
+        <p>Generate PDF reports</p>
+
+        <h2 id="websocket-events">WebSocket Events</h2>
+        <h3>Client Events</h3>
+        <ul>
+            <li><code>subscribe-metrics</code> - Subscribe to live metrics updates</li>
+            <li><code>subscribe-campaigns</code> - Subscribe to campaign updates</li>
+            <li><code>join-room</code> - Join specific update room</li>
+        </ul>
+
+        <h3>Server Events</h3>
+        <ul>
+            <li><code>connection</code> - Connection established</li>
+            <li><code>real-time-update</code> - Live metrics (every 5s)</li>
+            <li><code>campaigns-update</code> - Campaign data (every 30s)</li>
+            <li><code>alerts-update</code> - Performance alerts (every 2min)</li>
+        </ul>
+
+        <h2 id="testing">Testing</h2>
+        <h3>Frontend Testing</h3>
+        <p>The project includes test utilities:</p>
+        <ul>
+            <li><strong>test-connection.html</strong> - WebSocket connection testing interface</li>
+            <li>Component testing with React Testing Library</li>
+            <li>Integration testing for API services</li>
+        </ul>
+
+        <h3>Backend Testing</h3>
+        <ul>
+            <li><strong>test-mongo.js</strong> - Database connection verification</li>
+            <li><strong>test-account-reactivation.js</strong> - Account functionality testing</li>
+            <li>API endpoint testing with Jest/Supertest</li>
+        </ul>
+
+        <h3>Development Testing Scripts</h3>
+        <p>Use the provided batch files for testing:</p>
+        <pre><code># Test database connection
+node backend/test-mongo.js
+
+# Test account functionality  
+node test-account-reactivation.js
+
+# Open connection test interface
+open test-connection.html</code></pre>
+
+        <hr>
+        <p><em>This technical documentation provides a comprehensive overview of the ADmyBRAND Dash Nova project structure, following the exact repository organization and including detailed information about each component, configuration file, and development process.</em></p>
+    </div>
+</body>
+</html> 
